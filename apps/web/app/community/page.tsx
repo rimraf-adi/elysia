@@ -1,19 +1,39 @@
+"use client"
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import api from "@/lib/axios"
+import { useEffect, useState } from 'react'
 
-const topics = [
-  { id: 1, name: "Exam Stress", postCount: 15 },
-  { id: 2, name: "Loneliness", postCount: 8 },
-  { id: 3, name: "Mindfulness", postCount: 12 },
-]
-
-const recentPosts = [
-  { id: 1, title: "How I overcame exam anxiety", author: "Alex", likes: 24, comments: 7 },
-  { id: 2, title: "Finding friends in a new city", author: "Sam", likes: 18, comments: 5 },
-]
+interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  author: {
+    username: string;
+  };
+}
 
 export default function Community() {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
+
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        const response = await api.get('/blogs')
+        setBlogPosts(response.data)
+      } catch (error) {
+        console.error('Failed to fetch blog posts:', error)
+      }
+    }
+    fetchBlogPosts()
+  }, [])
+
+  const recentBlogPosts = blogPosts
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 2)
+
   return (
     <div className="space-y-8">
       <section>
@@ -24,38 +44,30 @@ export default function Community() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">Popular Topics</h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          {topics.map((topic) => (
-            <Card key={topic.id}>
-              <CardHeader>
-                <CardTitle>{topic.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{topic.postCount} posts</p>
-                <Button asChild className="mt-2">
-                  <Link href={`/community/topic/${topic.id}`}>View Posts</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      <section>
         <h2 className="text-2xl font-semibold mb-4">Recent Posts</h2>
         <div className="space-y-4">
-          {recentPosts.map((post) => (
+          {recentBlogPosts.map((post) => (
             <Card key={post.id}>
               <CardHeader>
                 <CardTitle>{post.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>By {post.author}</p>
-                <p>{post.likes} likes • {post.comments} comments</p>
-                <Button asChild className="mt-2">
-                  <Link href={`/community/post/${post.id}`}>Read More</Link>
-                </Button>
+                <p className="text-sm text-muted-foreground mb-2">
+                  {new Date(post.createdAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {post.content.substring(0, 150)}...
+                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm">By {post.author.username}</p>
+                  <Button asChild>
+                    <Link href={`/blogs/${post.id}`}>Read More</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
