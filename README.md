@@ -1,84 +1,42 @@
-# Turborepo starter
+# Elysia - Your Safe Space for Mental Well-Being
 
-This Turborepo starter is maintained by the Turborepo core team.
+**Elysia** is a comprehensive mental health support platform designed for hostel students, providing resources, confidential support, and self-care tools to promote well-being.
 
-## Using this example
+_"A Place of Peace, A Path to Healing"_
 
-Run the following command:
+## Features
 
-```sh
-npx create-turbo@latest
-```
+- **Resource Library**: Access articles, self-help tools, and guides on mental health topics.
+- **Anonymous Chat Service**: Connect with trained counselors anonymously for confidential support.
+- **Mood Tracking**: Log and track your emotional well-being over time with visual insights.
+- **Personalized Self-Care Tips**: Receive tailored recommendations to manage stress and improve mental health.
+- **Peer Support Community**: Share experiences and offer support in a safe, moderated environment.
+- **Event Calendar**: Stay updated on mental health workshops, events, and resources.
 
-## What's inside?
+## Key Benefits
 
-This Turborepo includes the following packages/apps:
+- **Confidentiality**: Guaranteed privacy for all interactions.
+- **24/7 Access**: Get help anytime, anywhere.
+- **Empathy**: Support from trained counselors and AI-driven recommendations.
+- **User-Centered**: Personalized tools based on your mood and needs.
 
-### Apps and Packages
+## How to Use
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+1. **Sign Up/Login**: Create your account or log in.
+2. **Access Resources**: Browse the resource library for articles and self-help tools.
+3. **Log Your Mood**: Track your emotions daily to gain insights.
+4. **Connect with Counselors**: Use the anonymous chat for real-time support.
+5. **Explore Self-Care Tips**: Receive personalized suggestions to manage your mental health.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Privacy & Security
 
-### Utilities
+- All user data is encrypted and stored securely.
+- Conversations are confidential and will not be shared without user consent.
 
-This Turborepo has some additional tools already setup for you:
+## Get Involved
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+For any questions or suggestions, feel free to reach out to [kinjawadekaradi112@gmail.com](mailto:kinjawadekaradi112@gmail.com).
 
-### Build
+---
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+**Elysia** – Your safe space for well-being and personal growth.
