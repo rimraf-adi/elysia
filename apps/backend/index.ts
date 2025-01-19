@@ -31,8 +31,21 @@ import {
     deleteProfileNote,
     cleanupExpiredNotes
 } from './profileNotes';
+import {
+  createEvent,
+  getEvents,
+  getEventById,
+  updateEvent,
+  deleteEvent
+} from './events';
 
-  
+import http from 'http';
+import AnonChat from './anonChat';
+
+const server = http.createServer();
+const anonChat = new AnonChat(server);
+
+
 
 export const prisma = new PrismaClient();
 const app = express();
@@ -68,9 +81,15 @@ app.get('/profile-notes/:userId?', authMiddleware, getProfileNotes);
 app.put('/profile-notes/:id', authMiddleware, updateProfileNote);
 app.delete('/profile-notes/:id', authMiddleware, deleteProfileNote);
 
+// Event routes
+app.post('/events', authMiddleware, createEvent);
+app.get('/events', getEvents);
+app.get('/events/:id', getEventById);
+app.put('/events/:id', authMiddleware, updateEvent);
+app.delete('/events/:id', authMiddleware, deleteEvent);
 
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+server.listen(8080); 
