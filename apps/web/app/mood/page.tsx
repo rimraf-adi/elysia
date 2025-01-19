@@ -1,32 +1,82 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import JournalList from "@/components/ui/JournalList"
 
-const moodData = [
-  { date: '2023-05-01', mood: 7 },
-  { date: '2023-05-02', mood: 6 },
-  { date: '2023-05-03', mood: 8 },
-  { date: '2023-05-04', mood: 5 },
-  { date: '2023-05-05', mood: 9 },
-  { date: '2023-05-06', mood: 7 },
-  { date: '2023-05-07', mood: 8 },
-]
+interface Journal {
+  date: string;
+  content: string;
+  sentiment: number;
+}
 
 export default function MoodTracking() {
   const [mood, setMood] = useState(5)
   const [note, setNote] = useState('')
+  const [journals, setJournals] = useState<Journal[]>([])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically send the mood data to your backend
-    console.log('Mood:', mood, 'Note:', note)
-    setNote('')
+  useEffect(() => {
+    fetchJournals()
+  }, [])
+
+  const fetchJournals = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/journal', {
+        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if (!response.ok) {
+        throw new Error('Failed to fetch journals');
+      }
+      const data = await response.json()
+      setJournals(data)
+    } catch (error) {
+      console.error('Failed to fetch journals:', error)
+    }
   }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const response = await fetch('http://localhost:5000/journal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          content: note,
+          date: new Date().toISOString(),
+          tags: ['mood'],
+          sentiment: mood,
+        }),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to save journal entry');
+      }
+      setNote('')
+      setMood(5)
+      await fetchJournals()
+    } catch (error) {
+      console.error('Failed to save mood:', error)
+    }
+  }
+
+  const moodData = journals?.length
+    ? journals
+        .slice(-7) // Get last 7 entries
+        .map(entry => ({
+          date: new Date(entry.date).toISOString().split('T')[0],
+          mood: entry.sentiment
+        }))
+    : []
 
   return (
     <div className="space-y-8">
@@ -85,14 +135,10 @@ export default function MoodTracking() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Mood Insights</CardTitle>
+          <CardTitle>Your Journal Entries</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>Based on your mood trends, here are some insights:</p>
-          <ul className="list-disc list-inside mt-2">
-            <li>Your mood tends to improve on weekends.</li>
-            <li>Consider taking breaks during study sessions to maintain a positive mood.</li>
-          </ul>
+          <JournalList journals={journals} />
         </CardContent>
       </Card>
     </div>
