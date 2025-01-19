@@ -24,6 +24,14 @@ import {
   addComment,
   vote
 } from './reddit';
+import {
+    createProfileNote,
+    getProfileNotes,
+    updateProfileNote,
+    deleteProfileNote,
+    cleanupExpiredNotes
+} from './profileNotes';
+
   
 
 export const prisma = new PrismaClient();
@@ -53,6 +61,14 @@ app.post('/posts', authMiddleware, createPost);
 app.get('/posts', getPosts);
 app.post('/comments', authMiddleware, addComment);
 app.post('/vote', authMiddleware, vote);
+
+// Profile Notes routes
+app.post('/profile-notes', authMiddleware, createProfileNote);
+app.get('/profile-notes/:userId?', authMiddleware, getProfileNotes);
+app.put('/profile-notes/:id', authMiddleware, updateProfileNote);
+app.delete('/profile-notes/:id', authMiddleware, deleteProfileNote);
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

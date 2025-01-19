@@ -34,6 +34,7 @@ model User {
   posts         Post[]
   comments      Comment[]
   votes         Vote[]
+  profileNotes  ProfileNote[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 }
@@ -92,4 +93,17 @@ model Vote {
 
   @@unique([userId, postId])
   @@unique([userId, commentId])
+}
+
+
+model ProfileNote {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([createdAt]) // For efficient cleanup of expired notes
 }
