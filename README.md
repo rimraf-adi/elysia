@@ -65,3 +65,12 @@ Currently, the backend of Elysia is not live due to an issue with the **Railway*
 We appreciate your patience as we work through this technical challenge and strive to bring the full functionality of Elysia to you as soon as possible.
 
 **Status Update**: [Railway Status Page](https://status.railway.app/) (Check the status of the service)
+
+
+
+![WhatsApp Image 2025-01-19 at 19 18 44](https://github.com/user-attachments/assets/4231e08c-8e3e-4aee-aaa5-f40164cab63a)
+![WhatsApp Image 2025-01-19 at 19 18 35](https://github.com/user-attachments/assets/930a10c1-132c-4af7-a2cc-572e41bdff66)
+![Uploading WhatsApp Image 2025-01-19 at 19.18.19.jpeg…]()
+![WhatsApp Image 2025-01-19 at 19 17 41](https://github.com/user-attachments/assets/cc0a2a69-0745-46a5-a97e-cfcce640e894)
+![WhatsApp Image 2025-01-19 at 19 16 34](https://github.com/user-attachments/assets/6846fedf-0662-4019-8d7c-212d91054004)
+****
