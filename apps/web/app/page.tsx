@@ -1,76 +1,103 @@
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+'use client'
 
-export default function Home() {
-  const user = { name: 'Sarah' } // This would come from authentication
-  const events = [
-    { id: 1, title: 'Stress Management Workshop', time: '2023-05-15 14:00', description: 'Learn techniques to manage exam stress' },
-    { id: 2, title: 'Group Meditation Session', time: '2023-05-17 18:00', description: 'Join us for a calming group meditation' },
-  ]
-  const topPosts = [
-    { id: 1, title: '5 Tips for Better Sleep', summary: 'Improve your sleep quality with these simple tips' },
-    { id: 2, title: 'Dealing with Homesickness', summary: 'Strategies to cope with feeling homesick in your hostel' },
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { BookOpen, MessageCircle, BarChart2, Users, Calendar, Lock } from 'lucide-react'
+
+export default function LandingPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check for authentication in localStorage
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+
+    // If authenticated, redirect to home
+    if (token && user) {
+      router.push('/home')
+    }
+  }, [router])
+
+  const features = [
+    { icon: BookOpen, title: 'Resource Library', description: 'Access articles, self-help tools, and guides on mental health topics.' },
+    { icon: MessageCircle, title: 'Anonymous Chat Service', description: 'Connect with trained counselors anonymously for confidential support.' },
+    { icon: BarChart2, title: 'Mood Tracking', description: 'Log and track your emotional well-being over time with visual insights.' },
+    { icon: Users, title: 'Peer Support Community', description: 'Share experiences and offer support in a safe, moderated environment.' },
+    { icon: Calendar, title: 'Event Calendar', description: 'Stay updated on mental health workshops, events, and resources.' },
+    { icon: Lock, title: 'Privacy & Security', description: 'All user data is encrypted and stored securely.' },
   ]
 
   return (
-    <div className="space-y-8">
-      <section className="text-center">
-        <h1 className="text-4xl font-bold text-primary mb-2">Welcome, {user.name}!</h1>
-        <p className="text-xl text-muted-foreground">We're here to support you. Take care of your mind, it's as important as your body!</p>
-      </section>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="bg-primary text-primary-foreground py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto text-center px-4">
+            <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 tracking-wide">Elysia</h1>
+            <p className="text-xl sm:text-2xl mb-6 sm:mb-8">Your Safe Space for Mental Well-Being</p>
+            <p className="text-lg sm:text-xl mb-8 sm:mb-12 italic">"A Place of Peace, A Path to Healing"</p>
+            <Button asChild size="lg" className="bg-background text-foreground hover:bg-secondary">
+              <Link href="/signup">Get Started</Link>
+            </Button>
+          </div>
+        </section>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Upcoming Events</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {events.map((event) => (
-            <Card key={event.id}>
-              <CardHeader>
-                <CardTitle>{event.title}</CardTitle>
-                <CardDescription>{new Date(event.time).toLocaleString()}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>{event.description}</p>
-                <Button className="mt-4">Join Now</Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+        {/* Features Section */}
+        <section className="py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Key Features</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+              {features.map((feature, index) => (
+                <Card key={index} className="bg-card shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardHeader>
+                    <feature.icon className="w-12 h-12 text-primary mb-4" />
+                    <CardTitle>{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>{feature.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Top Posts</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {topPosts.map((post) => (
-            <Card key={post.id}>
-              <CardHeader>
-                <CardTitle>{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{post.summary}</p>
-                <Link href={`/community/post/${post.id}`} className="text-primary hover:underline mt-2 inline-block">
-                  Read More
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+        {/* Benefits Section */}
+        <section className="bg-secondary py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto text-center px-4">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12">Key Benefits</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+              {['Confidentiality', 'Professional Support', 'Personalized Experience', 'User-Centered'].map((benefit, index) => (
+                <div key={index} className="bg-card p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold mb-2">{benefit}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Quick Access</h2>
-        <div className="flex flex-wrap gap-4">
-          <Button asChild>
-            <Link href="/chat">Anonymous Chat</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/mood">Mood Tracking</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/resources">Resources</Link>
-          </Button>
+        {/* CTA Section */}
+        <section className="bg-primary text-primary-foreground py-12 sm:py-16 md:py-20">
+          <div className="container mx-auto text-center px-4">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Ready to Start Your Journey?</h2>
+            <p className="text-lg sm:text-xl mb-6 sm:mb-8">Join Elysia today and take the first step towards better mental health.</p>
+            <Button asChild size="lg" className="bg-background text-foreground hover:bg-secondary">
+              <Link href="/signup">Sign Up Now</Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-accent text-accent-foreground py-6 sm:py-8">
+        <div className="container mx-auto text-center px-4">
+          <p>&copy; 2025 Elysia. All rights reserved.</p>
+          <p className="mt-2 text-sm sm:text-base">For any questions or suggestions, feel free to reach out to kinjawadekaradi112@gmail.com</p>
         </div>
-      </section>
+      </footer>
     </div>
   )
 }

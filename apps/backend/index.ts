@@ -1,5 +1,9 @@
 //express server
 import express from 'express';
+import cors from 'cors';
+
+
+
 import { signin, signup } from './auth';
 import { authMiddleware } from './auth';
 import { PrismaClient } from '@prisma/client';
@@ -42,15 +46,20 @@ import {
 import http from 'http';
 import AnonChat from './anonChat';
 
-const server = http.createServer();
+
+const app = express();
+const server = http.createServer(app);  // Create server from express app
 const anonChat = new AnonChat(server);
 
 
 
 export const prisma = new PrismaClient();
-const app = express();
-app.use(express.json());
 
+app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000', // Frontend origin
+  credentials: true,
+}));
 app.post('/signup', signup);
 app.post('/signin', signin);
 
@@ -88,8 +97,19 @@ app.get('/events/:id', getEventById);
 app.put('/events/:id', authMiddleware, updateEvent);
 app.delete('/events/:id', authMiddleware, deleteEvent);
 
+// Remove the separate server.listen() call and keep only the Express server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-server.listen(8080); 
+
+// Add cleanup on server shutdown
+process.on('SIGTERM', () => {
+  anonChat.cleanup();
+  server.close();
+});
+
+process.on('SIGINT', () => {
+  anonChat.cleanup();
+  server.close();
+});

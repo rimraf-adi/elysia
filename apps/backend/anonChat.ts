@@ -180,6 +180,14 @@ class AnonChat {
     }
     return null;
   }
+
+  cleanup() {
+    // Close all WebSocket connections
+    this.wss.clients.forEach(client => {
+      client.close();
+    });
+    this.wss.close();
+  }
 }
 
 export default AnonChat;
