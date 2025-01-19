@@ -18,6 +18,12 @@ import {
   updateBlog,
   deleteBlog
 } from './blogs';
+import {
+  createPost,
+  getPosts,
+  addComment,
+  vote
+} from './reddit';
   
 
 export const prisma = new PrismaClient();
@@ -41,6 +47,12 @@ app.get('/blogs', getAllBlogs);
 app.get('/blogs/:id', getBlogById);
 app.put('/blogs/:id', authMiddleware, updateBlog);
 app.delete('/blogs/:id', authMiddleware, deleteBlog);
+
+// Reddit-like feature routes
+app.post('/posts', authMiddleware, createPost);
+app.get('/posts', getPosts);
+app.post('/comments', authMiddleware, addComment);
+app.post('/vote', authMiddleware, vote);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
