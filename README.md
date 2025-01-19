@@ -68,9 +68,10 @@ We appreciate your patience as we work through this technical challenge and stri
 
 
 
-![WhatsApp Image 2025-01-19 at 19 18 44](https://github.com/user-attachments/assets/4231e08c-8e3e-4aee-aaa5-f40164cab63a)
-![WhatsApp Image 2025-01-19 at 19 18 35](https://github.com/user-attachments/assets/930a10c1-132c-4af7-a2cc-572e41bdff66)
-![Uploading WhatsApp Image 2025-01-19 at 19.18.19.jpeg…]()
-![WhatsApp Image 2025-01-19 at 19 17 41](https://github.com/user-attachments/assets/cc0a2a69-0745-46a5-a97e-cfcce640e894)
-![WhatsApp Image 2025-01-19 at 19 16 34](https://github.com/user-attachments/assets/6846fedf-0662-4019-8d7c-212d91054004)
-****
+
+![WhatsApp Image 2025-01-19 at 19 18 44](https://github.com/user-attachments/assets/09afa17a-181c-4477-a6f9-43f285dd0d4c)
+![WhatsApp Image 2025-01-19 at 19 18 35](https://github.com/user-attachments/assets/e491953d-c368-4497-93e1-843758e5a3cb)
+![WhatsApp Image 2025-01-19 at 19 18 25](https://github.com/user-attachments/assets/366df0e7-6ccb-409b-9829-1ebba64a67c6)
+![WhatsApp Image 2025-01-19 at 19 18 19](https://github.com/user-attachments/assets/3db26384-9133-47dd-abec-0564be43efae)
+![WhatsApp Image 2025-01-19 at 19 17 41](https://github.com/user-attachments/assets/0319b013-d404-4c39-ad1a-bcecb1a2f2b3)
+![WhatsApp Image 2025-01-19 at 19 16 34](https://github.com/user-attachments/assets/0e089ba3-c847-4d5f-a998-cb0adbf2c3c3)
