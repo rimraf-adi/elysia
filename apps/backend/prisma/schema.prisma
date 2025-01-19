@@ -13,11 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model JournalEntry {
   id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String
+  content   String
+  date      DateTime
+  tags      String[]
+  sentiment Float
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String        @unique
+  password      String
+  name          String
+  journalEntries JournalEntry[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }

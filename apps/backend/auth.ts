@@ -1,10 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 const SALT_ROUNDS = 10;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+// Define custom interface for authenticated request
+interface AuthRequest extends Request {
+  user?: { id: string };
+}
 
 export async function signup(req: any, res: any) {
   const { email, password, name } = req.body;
@@ -75,3 +82,26 @@ export async function signin(req: any, res: any) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
+export const authMiddleware = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): void => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    res.status(401).json({ error: 'Authentication required' });
+    return;
+  }
+
+  jwt.verify(token, JWT_SECRET, (error: any, user: any) => {
+    if (error) {
+      res.status(403).json({ error: 'Invalid token' });
+      return;
+    }
+    req.user = { id: user.userId };
+    next();
+  });
+};
