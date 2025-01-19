@@ -13,44 +13,34 @@ interface AuthRequest extends Request {
   user?: { id: string };
 }
 
-export async function signup(req: any, res: any) {
-  const { email, password, name } = req.body;
-
+export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
+    const { email, username, password } = req.body;
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ email }, { username }] }
     });
 
     if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
+      res.status(400).json({ error: 'Email or username already exists' });
+      return;
     }
 
     const hashedPassword = await hash(password, SALT_ROUNDS);
-
     const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-      },
+      data: { email, username, password: hashedPassword }
     });
 
     const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' });
-
-    return res.status(201).json({
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-      token,
+    res.status(201).json({
+      user: { id: user.id, email: user.email, username: user.username },
+      token
     });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
-export async function signin(req: any, res: any) {
+export const signin = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
   try {
@@ -59,29 +49,31 @@ export async function signin(req: any, res: any) {
     });
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      res.status(400).json({ error: 'Invalid credentials' });
+      return;
     }
 
     const isPasswordValid = await compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      res.status(400).json({ error: 'Invalid credentials' });
+      return;
     }
 
     const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: '24h' });
 
-    return res.status(200).json({
+    res.status(200).json({
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        username: user.username,
       },
       token,
     });
   } catch (error) {
-    return res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-}
+};
 
 export const authMiddleware = (
   req: AuthRequest,

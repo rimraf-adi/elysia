@@ -32,7 +32,8 @@ export const getPosts = async (req: Request, res: Response) => {
         author: {
           select: {
             id: true,
-            name: true,
+            username: true,
+
           },
         },
         _count: {

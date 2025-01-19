@@ -28,13 +28,14 @@ model User {
   id            String         @id @default(cuid())
   email         String        @unique
   password      String
-  name          String
+  username      String        @unique
   journalEntries JournalEntry[]
   blogs         Blog[]
   posts         Post[]
   comments      Comment[]
   votes         Vote[]
   profileNotes  ProfileNote[]
+  events        Event[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 }
@@ -106,4 +107,21 @@ model ProfileNote {
 
   @@index([userId])
   @@index([createdAt]) // For efficient cleanup of expired notes
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  startTime   DateTime
+  endTime     DateTime
+  type        String   // e.g., "workshop", "support_group", "therapy_session"
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([startTime, endTime])
 }
