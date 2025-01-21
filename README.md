@@ -5,12 +5,9 @@
 _"A Place of Peace, A Path to Healing"_
 
 ## Features
-
-- **Resource Library**: Access articles, self-help tools, and guides on mental health topics.
 - **Anonymous Chat Service**: Connect with trained counselors anonymously for confidential support.
 - **Mood Tracking**: Log and track your emotional well-being over time with visual insights.
 - **Personalized Self-Care Tips**: Receive tailored recommendations to manage stress and improve mental health.
-- **Peer Support Community**: Share experiences and offer support in a safe, moderated environment.
 - **Event Calendar**: Stay updated on mental health workshops, events, and resources.
 
 ## Key Benefits
@@ -23,7 +20,6 @@ _"A Place of Peace, A Path to Healing"_
 ## How to Use
 
 1. **Sign Up/Login**: Create your account or log in.
-2. **Access Resources**: Browse the resource library for articles and self-help tools.
 3. **Log Your Mood**: Track your emotions daily to gain insights.
 4. **Connect with Counselors**: Use the anonymous chat for real-time support.
 5. **Explore Self-Care Tips**: Receive personalized suggestions to manage your mental health.
